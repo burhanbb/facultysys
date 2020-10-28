@@ -1,0 +1,27 @@
+{%extends 'project.html'%}
+
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Forgot Password</h1>
+        <p><a href={{curl}}>Home</a> /  Forgot Password</p>
+        <font color="yellow" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}forget/ method="POST">
+{% csrf_token %}
+<br></br>
+  <div class="container">
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    <p></p>
+    
+    <button type="submit">Submit</button>
+<p></p>    
+    
+  </div>
+</form></p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+    {% block container %}
+   
+    {%endblock %}

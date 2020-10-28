@@ -1,0 +1,68 @@
+{% extends 'project.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}uy43hBgd843/ >Home</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}uy43hBgd843/uleave/ >Apply For Leave</a></li>
+                <li><a href={{curl}}uy43hBgd843/uattendance/ >Check Attendance</a></li>
+                <li><a href={{curl}}uy43hBgd843/addinfo/ >Add Professional Details</a></li>
+                <li><a href={{curl}}uy43hBgd843/usalary/ >Check Salary</a></li>
+                
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+
+
+
+
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Welcome {{name}}</h1>
+        <p><a href={{curl}}uy43hBgd843/ >Faculty-Home</a>  / Dashboard</p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+{% block container %}
+    <!-- main-container -->
+    <div class="container main-container">
+        
+
+        <div class="col-md-12">
+            <h3 class="text-uppercase">Update Profile</h3>
+            <div class="h-30"></div>
+        </div>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}uy43hBgd843/ method="POST">
+{% csrf_token %}
+<br></br>
+  <select name="field">
+    <option >Select Field:</option>
+    <option >first_name</option>
+    <option >second_name</option>
+    <option >mobile</option>
+    <option >gender</option>
+    <option >address</option>
+  </select>
+  <label for="new"><b>-></b><b>     </b></label>
+    <input type="text" placeholder="Enter Value " name="value" required>
+    <p></p>
+<button type="submit">Change</button>    
+</div>
+</form></p>
+<div class="col-md-12">
+<a href={{curl}}uy43hBgd843/upass/ ><button>Change Password</button></a>
+</div>
+    </div>
+    <!-- end main-container -->
+    {%endblock %}

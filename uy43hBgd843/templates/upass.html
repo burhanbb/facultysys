@@ -1,0 +1,53 @@
+{% extends 'userbase.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}uy43hBgd843/ >Home</a></li>
+                <li><a href={{curl}}uy43hBgd843/uleave/ >Apply For Leave</a></li>
+                <li><a href={{curl}}uy43hBgd843/uattendance/ >Check Attendance</a></li>
+                <li><a href={{curl}}uy43hBgd843/addinfo/ >Add Professional Details</a></li>
+                <li><a href={{curl}}uy43hBgd843/usalary/ >Check Salary</a> </li>
+                
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Change Password</h1>
+        <p><a href={{curl}}uy43hBgd843/ >Faculty-Home</a>  / Dashboard</p>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}uy43hBgd843/upass/ method="POST">
+{% csrf_token %}
+    
+    <br></br>
+<label for="new"><b>Existing Password:</b><b>     </b></label>
+    <input type="text" placeholder="Enter Exisiting Password" name="field" required>
+   
+    <br></br>
+<label for="new"><b>New Password:</b><b>     </b></label>
+    <input type="text" placeholder="Enter New Password" name="value" required>
+  <p></p>
+    <button type="submit">Change</button>  
+</div>
+</form></p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+    {% block container %}
+    <!-- main-container -->
+    
+    {%endblock %}
+
+
+

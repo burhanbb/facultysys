@@ -1,0 +1,140 @@
+{% extends 'managebase.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}mahd748hdYd/ >Home</a></li>
+               <li><a href={{curl}}mahd748hdYd/search/ >Search</a> <i class="ion-ios-circle-filled color"></i></li>
+                
+                <li><a href={{curl}}mahd748hdYd/mlapplicants/ >Check Leave Applicants</a></li>
+                <li><a href={{curl}}mahd748hdYd/mlattendance/ >Upload Attendance</a> </li>
+                
+                <li><a href={{curl}}mahd748hdYd/mlapproval/ >Leave Approval</a></li>
+                
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Search</h1>
+        <p><a href={{curl}}mahd748hdYd/ >HOD-Home</a>  / Dashboard</p>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <font color="red" style="height:20px;">{{out}}</font>
+        <p> <form action={{curl}}mahd748hdYd/search/ method="POST">
+{% csrf_token %}
+<select name="field">
+    <option >Search By:</option>
+    <option >First Name</option>
+    <option >Last Name</option>
+    <option >Gender</option>
+    <option >Email</option>
+    <option >Attendance %(>)</option>
+    <option >Attendance %(<)</option>
+    <option >Salary(<)</option>
+    <option >Salary(>)</option>
+    <option >Industry Experience</option>
+    <option >Academic Experience</option>
+    <option >Research Experience</option>
+    <option >Department Name</option>
+    <option >Date Of Birth(Year)</option>
+    
+
+
+<br></br>
+
+    <input type="text" placeholder="Search" name="value" required>
+    <p></p>
+    
+   
+    <button type="submit">Search</button>  
+</div>
+</form></p>
+
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+    {% block container %}
+    <!-- main-container -->
+   <div class="container main-container">
+        
+
+        <div class="col-md-12">
+            <h3 class="text-uppercase">Results</h3>
+            <div class="h-30"></div>
+        </div>
+{% for m in user1 %}
+        <div class="col-md-3">
+            <ul class="cat-ul">
+                <li><i class="ion-ios-circle-filled"></i>{{m.1}} {{m.2}} </li>
+                <li>Email: {{m.3}} </li>
+                <li>Phone Number: {{m.5}} </li>
+                <li>Gender: {{m.7}} </li>
+                {% for do in dob %}
+                <li>Date Of Birth: {{do.1}}/{{do.2}}/{{do.3}}</li>
+                {% endfor %}
+                <li>Role: {{m.8}} </li>
+                <li>Salary: {{m.12}}</li>
+                <li>Department Name: {{deptn}}</li>
+                <li>Department ID: {{depti}}</li>
+                <li>Industry Experience: {{wei}}</li>
+                <li>Academic Experience: {{wea}}</li>
+                <li>Research Experience: {{wer}}</li>
+                <table>
+  <tr>
+    <th>|Examination Passed|</th>
+    <th>Year Passing|</th>
+    <th>Board|</th>
+    <th>Marks|</th>
+    <th>Principal Subjects|</th>
+  </tr>
+  {% for a in ac %}
+  <tr>
+    <td>{{a.1}}</td>
+    <td>{{a.2}}</td>
+    <td>{{a.3}}</td>
+    <td>{{a.4}}</td>
+    <td>{{a.5}}</td>
+  </tr>
+ {% endfor %}
+</table>
+                <li>Workshop Attended:</li>
+                {% for wo in work %}
+                <li>{{wo.1}}:{{wo.2}}</li>
+                {% endfor %}
+                <li>Workshop Organised:</li>
+                {% for w in worko %}
+                <li>{{w.1}}</li>
+                {% endfor %}
+                <li>Acheivements:</li>
+                {% for t in ach %}
+                <li>{{t.1}}</li>
+                {% endfor %}
+                <li>Certifications:</li>
+                {% for ce in cert %}
+                <li>{{ce.1}}</li>
+                {% endfor %}
+                <li>Strengths:</li>
+
+                {% for b in s %}
+                <li>{{b.1}}</li>
+                {% endfor %}
+                <li>Weaknesses:</li>
+                {% for c in w %}
+                <li>{{c.1}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+{% endfor %}
+    </div>
+    <!-- end main-container -->
+    {%endblock %}

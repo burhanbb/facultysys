@@ -1,0 +1,105 @@
+{% extends 'adminbase.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}ad94bHry73/ >Home</a></li>
+                <li><a href={{curl}}ad94bHry73/minfo/ >Manage Existing User</a></li>
+                <li><a href={{curl}}ad94bHry73/msalary/ >Manage User Salary</a></li>
+                
+                <li><a href={{curl}}ad94bHry73/mexp/ >Manage User Experience</a></li>
+                <li><a href={{curl}}ad94bHry73/mleave/ >Manage User Leaves</a></li>
+                <li><a href={{curl}}ad94bHry73/mlogin/ >Manage Login</a></li>
+                <li><a href={{curl}}ad94bHry73/minfo1/ >Add New User</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}ad94bHry73/mdelete/ >Delete Existing User</a></li>
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Add New Users(Personal Details)</h1>
+        <p><a href={{curl}}ad94bHry73/ >Admin</a>  / Dashboard</p>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}ad94bHry73/minfo1/ method="POST">
+{% csrf_token %}
+<br></br>
+  <div class="container">
+    
+    <label for="First_Name"><b>First Name</b><b>     </b></label>
+    <input type="text" placeholder="Enter First Name" name="first" required>
+    <p></p>
+    <label for="Last_Name"><b>Last Name</b><b>     </b></label>
+    <input type="text" placeholder="Enter Last Name" name="last" required>
+    <p></p>
+    <label for="email"><b>Email</b><b>     </b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    
+    <p></p>
+     <label for="password"><b>Password</b><b>     </b></label>
+    <input type="text" placeholder="Enter Password" name="password" required>
+    <p></p>
+    <label for="dob"><b>DOB:</b><b>     </b></label>
+    <input type="text" placeholder="Enter Day" name="day" required>
+    <input type="text" placeholder="Enter Date" name="date" required>
+    <input type="text" placeholder="Enter Year" name="year" required>
+    <p></p>
+    <label for="email"><b>Phone Number</b><b>     </b></label>
+    <input type="text" placeholder="Enter Phone Number" name="mobile" required>
+    <p></p>
+    <label for="Address"><b>Address</b><b>     </b></label>
+    <input type="text" placeholder="Enter Address" name="address" required>
+    <p>
+    <label for="gender"><b>Gender</b></label>
+    <td>
+<input type="radio" name="gender" value="male"/> Male
+&nbsp;&nbsp;
+<input type="radio" name="gender" value="female"/> Female
+</td>
+</p>       
+
+  <select name="role">
+    <option >Select role:</option>
+    <option >admin</option>
+    <option >manager</option>
+    <option >user</option>
+  </select>
+<p></p>
+<label for="salary"><b>Salary</b><b>     </b></label>
+    <input type="integer" placeholder="Enter Salary" name="salary" required>
+    <p></p>
+<label for="work_experience"><b>Work Experience</b></label>
+    <input type="text" placeholder="Enter Work Experience" name="experience" required>
+    <p></p>
+    <select name="deptname">
+    <option >Select Department:</option>
+    <option >Engineering</option>
+    <option >Management</option>
+    <option >Commerce</option>
+    <option >Agriculture</option>
+    <option >Science</option>
+    <option >Art, Humanties And Social Science</option>
+    <option >Pharmacy</option>
+  </select>
+   <p></p>
+<label for="deptid"><b>Department ID</b></label>
+    <input type="text" placeholder="Enter Department ID" name="deptid" required>
+<p></p>
+<button type="submit">Add</button>
+<p></p>    
+</div>
+</form></p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+      {% block container %}
+     {% endblock %}

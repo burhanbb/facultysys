@@ -1,0 +1,66 @@
+{% extends 'adminbase.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}ad94bHry73/ >Home</a></li>
+                <li><a href={{curl}}ad94bHry73/minfo/ >Manage Existing User</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}ad94bHry73/msalary/ >Manage User Salary</a></li>
+                
+                <li><a href={{curl}}ad94bHry73/mexp/ >Manage User Experience</a></li>
+                <li><a href={{curl}}ad94bHry73/mleave/ >Manage User Leaves</a></li>
+                <li><a href={{curl}}ad94bHry73/mlogin/ >Manage Login</a></li>
+                <li><a href={{curl}}ad94bHry73/minfo1/ >Add New User</a></li>
+                <li><a href={{curl}}ad94bHry73/mdelete/ >Delete Existing User</a></li>
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Manage Existing Users</h1>
+        <p><a href={{curl}}ad94bHry73/ >Admin</a>  / Dashboard</p>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}ad94bHry73/minfo/ method="POST">
+{% csrf_token %}
+<br></br>
+  <div class="container">
+    <label for="email"><b>Email</b><b>     </b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    <p></p>
+        
+        
+
+  <select name="field">
+    <option >Select Field:</option>
+    <option >first_name</option>
+    <option >last_name</option>
+    <option >email</option>
+    <option >password</option>
+    <option >mobile</option>
+    <option >address</option>
+    <option >gender</option>
+  </select>
+
+<label for="new"><b>-></b><b>     </b></label>
+    <input type="text" placeholder="Enter New Value" name="value" required>
+    <p></p>
+<button type="submit">Change</button>
+<p></p>    
+</div>
+</form></p>
+
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+      {% block container %}
+     {% endblock %}

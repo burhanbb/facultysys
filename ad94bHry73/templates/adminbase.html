@@ -1,0 +1,72 @@
+{% extends 'project.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}ad94bHry73/ >Home</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}ad94bHry73/minfo/ >Manage Existing User</a></li>
+                <li><a href={{curl}}ad94bHry73/msalary/ >Manage User Salary</a></li>
+                
+                <li><a href={{curl}}ad94bHry73/mexp/ >Manage User Experience</a></li>
+                <li><a href={{curl}}ad94bHry73/mleave/ >Manage User Leaves</a></li>
+                <li><a href={{curl}}ad94bHry73/mlogin/ >Manage Login</a></li>
+                <li><a href={{curl}}ad94bHry73/minfo1/ >Add New User</a></li>
+                <li><a href={{curl}}ad94bHry73/mdelete/ >Delete Existing User</a></li>
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+
+
+
+
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Welcome {{name}}</h1>
+        <p><a href={{curl}}ad94bHry73/>Admin-Home</a>  / Dashboard</p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+
+    {% block container %}
+    <!-- main-container -->
+    <div class="container main-container">
+        
+
+        <div class="col-md-12">
+            <h3 class="text-uppercase">Update Profile</h3>
+            <div class="h-30"></div>
+        </div>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}ad94bHry73/ method="POST">
+{% csrf_token %}
+<br></br>
+  <select name="field">
+    <option >Select Field:</option>
+    <option >first_name</option>
+    <option >second_name</option>
+    <option >mobile</option>
+    <option >gender</option>
+    <option >address</option>
+  </select>
+  <label for="new"><b>-></b><b>     </b></label>
+    <input type="text" placeholder="Enter Value " name="value" required>
+    <p></p>
+<button type="submit">Change</button>    
+</div>
+</form></p>
+<div class="col-md-12">
+<a href={{curl}}ad94bHry73/cpass/ ><button>Change Password</button></a>
+</div>
+    </div>
+    <!-- end main-container -->
+    {%endblock %}

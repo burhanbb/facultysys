@@ -1,0 +1,57 @@
+{% extends 'managebase.html'%}
+{% block nav %}
+            <!-- box-nav -->
+            <a class="box-primary-nav-trigger" href="#0">
+                <span class="box-menu-text">Menu</span><span class="box-menu-icon"></span>
+            </a>
+            <!-- box-primary-nav-trigger -->
+        </header>
+        <!-- end box-header -->
+        
+        <!-- nav -->
+        <nav>
+            <ul class="box-primary-nav">
+               <li><a href={{curl}}mahd748hdYd/ >Home</a></li>
+               <li><a href={{curl}}mahd748hdYd/search/ >Search</a> </li>
+                <li><a href={{curl}}mahd748hdYd/mlapplicants/ >Check Leave Applicants</a></li>
+                <li><a href={{curl}}mahd748hdYd/mlattendance/ >Upload Attendance</a> <i class="ion-ios-circle-filled color"></i></li>
+                
+                <li><a href={{curl}}mahd748hdYd/mlapproval/ >Leave Approval</a></li>
+                
+                <li><a href={{curl}} >Logout</a></li>
+            </ul>
+        </nav>
+        {% endblock%}
+{% block topbar %}
+    <!-- top-bar -->
+    <div class="top-bar">
+        <h1>Upload Employees Attendance</h1>
+        <p><a href={{curl}}mahd748hdYd/ >HOD-Home</a>  / Dashboard</p>
+        <font color="green" style="height:20px;">{{output}}</font>
+        <p> <form action={{curl}}mahd748hdYd/mlattendance/ method="POST">
+{% csrf_token %}
+<br></br>
+<label for="new"><b>Email:</b><b>     </b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+    
+    <br></br>
+<label for="new"><b>Total Working Days:</b><b>     </b></label>
+    <input type="integer" placeholder="Enter Working Days" name="days" required>
+   
+    <br></br>
+<label for="new"><b>Faculty Attended:</b><b>     </b></label>
+    <input type="integer" placeholder="Enter Days" name="myattend" required>
+  <p></p>
+    <button type="submit">Upload</button>  
+</div>
+</form></p>
+    </div>
+    <!-- end top-bar -->
+    {% endblock %}
+    {% block container %}
+    <!-- main-container -->
+    <!--<div class="container main-container">
+        
+    </div>-->
+    <!-- end main-container -->
+    {%endblock %}
