@@ -72,23 +72,24 @@
             <h3 class="text-uppercase">Results</h3>
             <div class="h-30"></div>
         </div>
-{% for m in user1 %}
+
+{% for details in dlist %}
         <div class="col-md-3">
             <ul class="cat-ul">
-                <li><i class="ion-ios-circle-filled"></i>{{m.1}} {{m.2}} </li>
-                <li>Email: {{m.3}} </li>
-                <li>Phone Number: {{m.5}} </li>
-                <li>Gender: {{m.7}} </li>
-                {% for do in dob %}
-                <li>Date Of Birth: {{do.1}}/{{do.2}}/{{do.3}}</li>
+                <li><i class="ion-ios-circle-filled"></i>{{details.first}} {{details.second}} </li>
+                <li>Email: {{details.email}} </li>
+                <li>Phone Number: {{details.mobile}} </li>
+                <li>Gender: {{details.gender}} </li>
+                {% for u in details.dob %}
+                <li>Date Of Birth: {{u.1}}/{{u.2}}/{{u.3}}</li>
                 {% endfor %}
-                <li>Role: {{m.8}} </li>
-                <li>Salary: {{m.12}}</li>
-                <li>Department Name: {{deptn}}</li>
-                <li>Department ID: {{depti}}</li>
-                <li>Industry Experience: {{wei}}</li>
-                <li>Academic Experience: {{wea}}</li>
-                <li>Research Experience: {{wer}}</li>
+                <li>Attendance %: {{details.per}}</li>
+                <li>Salary: {{details.salary}}</li>
+                <li>Department Name: {{details.deptn}}</li>
+                <li>Department ID: {{details.depti}}</li>
+                <li>Industry Experience: {{details.industry}}</li>
+                <li>Academic Experience: {{details.academic}}</li>
+                <li>Research Experience: {{details.research}}</li>
                 <table>
   <tr>
     <th>|Examination Passed|</th>
@@ -97,7 +98,7 @@
     <th>Marks|</th>
     <th>Principal Subjects|</th>
   </tr>
-  {% for a in ac %}
+  {% for a in details.ac %}
   <tr>
     <td>{{a.1}}</td>
     <td>{{a.2}}</td>
@@ -108,29 +109,29 @@
  {% endfor %}
 </table>
                 <li>Workshop Attended:</li>
-                {% for wo in work %}
+                {% for wo in details.workshopa %}
                 <li>{{wo.1}}:{{wo.2}}</li>
                 {% endfor %}
                 <li>Workshop Organised:</li>
-                {% for w in worko %}
-                <li>{{w.1}}</li>
+                {% for w in details.workshopo %}
+                <li>{{w}}</li>
                 {% endfor %}
                 <li>Acheivements:</li>
-                {% for t in ach %}
-                <li>{{t.1}}</li>
+                {% for t in details.ach %}
+                <li>{{t}}</li>
                 {% endfor %}
                 <li>Certifications:</li>
-                {% for ce in cert %}
-                <li>{{ce.1}}</li>
+                {% for ce in details.cert %}
+                <li>{{ce}}</li>
                 {% endfor %}
                 <li>Strengths:</li>
 
-                {% for b in s %}
-                <li>{{b.1}}</li>
+                {% for b in details.stre %}
+                <li>{{b}}</li>
                 {% endfor %}
                 <li>Weaknesses:</li>
-                {% for c in w %}
-                <li>{{c.1}}</li>
+                {% for c in details.weakness %}
+                <li>{{c}}</li>
                 {% endfor %}
             </ul>
         </div>

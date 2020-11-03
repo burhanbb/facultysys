@@ -162,116 +162,173 @@ def search(request):
             
         value=request.POST.get('value')
         choice=request.POST.get('field')
+        
+        
         if choice=="First Name":
             try:
                 query="select regid from facultydb where first_name='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
+            
         elif choice=='Last Name':
             try:
                 query="select regid from facultydb where second_name='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
             
@@ -280,55 +337,82 @@ def search(request):
                 query="select regid from facultydb where gender='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Email":
@@ -336,55 +420,82 @@ def search(request):
                 query="select regid from facultydb where email='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Attendance %(>)":
@@ -399,55 +510,82 @@ def search(request):
                     p=int(s[1])
                     if p>per:
                         user.append(s[0])
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                  return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
              
@@ -463,55 +601,82 @@ def search(request):
                     p=int(s[1])
                     if p<per:
                         user.append(s[0])
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                  return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
              
@@ -526,55 +691,82 @@ def search(request):
                     p=int(s[1])
                     if p<sal:
                         user.append(s[0])
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                  return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Salary(>)":
@@ -588,55 +780,82 @@ def search(request):
                     p=int(s[1])
                     if p>sal:
                         user.append(s[0])
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                  return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Industry Experience":
@@ -644,55 +863,82 @@ def search(request):
                 query="select regid from facultydbwe where industry='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Research Experience":
@@ -700,55 +946,82 @@ def search(request):
                 query="select regid from facultydbwe where research='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Academic Experience":
@@ -756,55 +1029,82 @@ def search(request):
                 query="select regid from facultydbwe where academic='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
             
@@ -813,55 +1113,82 @@ def search(request):
                 query="select regid from facultydbdept where deptname='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         elif choice=="Date Of Birth(Year)":
@@ -869,55 +1196,82 @@ def search(request):
                 query="select regid from facultydbdob where year='%s' " %(value)
                 models.cursor.execute(query)
                 user=models.cursor.fetchall()
+                dlist=[]
                 for regid in user:
+                    details={}
                     query="select * from facultydb where regid='%s'"%(regid)
                     models.cursor.execute(query)
                     user1=models.cursor.fetchall()
-                    query="select deptname from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept1=models.cursor.fetchall()
-                    deptn=str(dept1).strip("(',)")
-                    query="select deptid from facultydbdept where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dept2=models.cursor.fetchall()
-                    depti=str(dept2).strip("(',)")
-                    query="select industry from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we1=models.cursor.fetchall()
-                    wei=str(we1).strip("(',)")
-                    query="select academic from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we2=models.cursor.fetchall()
-                    wea=str(we2).strip("(',)")
-                    query="select research from facultydbwe where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    we3=models.cursor.fetchall()
-                    wer=str(we3).strip("(',)")
-                    query="select * from facultydbacademic where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ac=models.cursor.fetchall()
-                    query="select * from facultydbach where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    ach=models.cursor.fetchall()
-                    query="select * from facultydbweakness where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    w=models.cursor.fetchall()
-                    query="select * from facultydbstrengths where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    s=models.cursor.fetchall()
-                    query="select * from facultydbdob where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    dob=models.cursor.fetchall()
-                    query="select * from facultydbcert where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    cert=models.cursor.fetchall()
-                    query="select * from facultydbworkshopa where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    work=models.cursor.fetchall()
-                    query="select * from facultydbworkshopo where regid='%s'"%(regid)
-                    models.cursor.execute(query)
-                    worko=models.cursor.fetchall()
-                    return render(request,'search.html',{'curl':curl,'user1':user1,'worko':worko,'work':work,'cert':cert,'dob':dob,'w':w,'s':s,'ach':ach,'deptn':deptn,'depti':depti,'wei':wei,'wea':wea,'wer':wer,'ac':ac,'output':'Results Are Shown Below!'})
+                    if user1[0][8]=='user':
+                        details["first"]=user1[0][1]
+                        details["second"]=user1[0][2]
+                        details["email"]=user1[0][3]
+                        details["mobile"]=user1[0][5]
+                        details["address"]=user1[0][6]
+                        details["gender"]=user1[0][7]
+                        per=(user1[0][9]/user1[0][10])*100
+                        details["per"]=per
+                        details["leave"]=user1[0][11]
+                        details["salary"]=user1[0][12]
+                        query="select deptname from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept1=models.cursor.fetchall()
+                        deptn=str(dept1).strip("(',)")
+                        details["deptn"]=deptn
+                        query="select deptid from facultydbdept where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dept2=models.cursor.fetchall()
+                        depti=str(dept2).strip("(',)")
+                        details["deptid"]=depti
+                        query="select industry from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we1=models.cursor.fetchall()
+                        wei=str(we1).strip("(',)")
+                        details["industry"]=wei
+                        query="select academic from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we2=models.cursor.fetchall()
+                        wea=str(we2).strip("(',)")
+                        details["academic"]=wea
+                        query="select research from facultydbwe where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        we3=models.cursor.fetchall()
+                        wer=str(we3).strip("(',)")
+                        details["research"]=wer
+                        query="select * from facultydbacademic where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ac=models.cursor.fetchall()
+                        details["ac"]=ac
+                        query="select details from facultydbach where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        ach=models.cursor.fetchall()
+                        details["ach"]=ach
+                        query="select details from facultydbweakness where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        w=models.cursor.fetchall()
+                        details["weakness"]=w
+                        query="select details from facultydbstrengths where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        s=models.cursor.fetchall()
+                        details["stre"]=s
+                        query="select * from facultydbdob where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        dob=models.cursor.fetchall()
+                        details["dob"]=dob
+                        query="select details from facultydbcert where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        cert=models.cursor.fetchall()
+                        details["cert"]=cert
+                        query="select * from facultydbworkshopa where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        work=models.cursor.fetchall()
+                        details["workshopa"]=work
+                        query="select details from facultydbworkshopo where regid='%s'"%(regid)
+                        models.cursor.execute(query)
+                        worko=models.cursor.fetchall()
+                        details["workshopo"]=worko
+                        dlist.append(details)
+                return render(request,'search.html',{'curl':curl,'dlist':dlist,'output':'Results Are Shown Below!'})
             except:
                 return render(request,'search.html',{'curl':curl,'out':'No Results Found!'})
         
