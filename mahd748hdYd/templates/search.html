@@ -114,24 +114,24 @@
                 {% endfor %}
                 <li>Workshop Organised:</li>
                 {% for w in details.workshopo %}
-                <li>{{w}}</li>
+                <li>{{w.0}}</li>
                 {% endfor %}
                 <li>Acheivements:</li>
                 {% for t in details.ach %}
-                <li>{{t}}</li>
+                <li>{{t.0}}</li>
                 {% endfor %}
                 <li>Certifications:</li>
                 {% for ce in details.cert %}
-                <li>{{ce}}</li>
+                <li>{{ce.0}}</li>
                 {% endfor %}
                 <li>Strengths:</li>
 
                 {% for b in details.stre %}
-                <li>{{b}}</li>
+                <li>{{b.0}}</li>
                 {% endfor %}
                 <li>Weaknesses:</li>
                 {% for c in details.weakness %}
-                <li>{{c}}</li>
+                <li>{{c.0}}</li>
                 {% endfor %}
             </ul>
         </div>
