@@ -11,5 +11,6 @@ urlpatterns = [
     path('mlapproval/', views.approval),
     path('mpass/',views.mchange),
     path('search/',views.search),
+    path('mstatus/',views.mstatus),
 
 ]

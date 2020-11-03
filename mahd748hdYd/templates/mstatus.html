@@ -15,8 +15,8 @@
                <li><a href={{curl}}mahd748hdYd/search/ >Search</a> </li>
                 <li><a href={{curl}}mahd748hdYd/mlapplicants/ >Check Leave Applicants</a></li>
                 <li><a href={{curl}}mahd748hdYd/mlattendance/ >Upload Attendance</a></li>
-                <li><a href={{curl}}mahd748hdYd/mstatus/ >Manage User Status</a> </li>
-                <li><a href={{curl}}mahd748hdYd/mlapproval/ >Leave Approval</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}mahd748hdYd/mstatus/ >Manage User Status</a> <i class="ion-ios-circle-filled color"></i></li>
+                <li><a href={{curl}}mahd748hdYd/mlapproval/ >Leave Approval</a></li>
                 
                 <li><a href={{curl}} >Logout</a></li>
             </ul>
@@ -25,41 +25,29 @@
 {% block topbar %}
     <!-- top-bar -->
     <div class="top-bar">
-        <h1>Leave Approval</h1>
+        <h1>Manage User Status</h1>
         <p><a href={{curl}}mahd748hdYd/ >HOD-Home</a>  / Dashboard</p>
-    </div>
-    <!-- end top-bar -->
-    {% endblock %}
-
-  {% block container %}
-    <!-- main-container -->
-    <div class="container main-container">
-        
-
-        <div class="col-md-12">
-            <h3 class="text-uppercase">Mail would be sent to the concerned faculty whether their leave is approved or not!</h3>
-            <div class="h-30"></div>
-        </div>
         <font color="green" style="height:20px;">{{output}}</font>
-        <p> <form action={{curl}}mahd748hdYd/mlapproval/ method="POST">
+        <p> <form action={{curl}}mahd748hdYd/mstatus/ method="POST">
 {% csrf_token %}
 <br></br>
 <label for="new"><b>Email:</b><b>     </b></label>
     <input type="text" placeholder="Enter Email" name="email" required>
-    <p></p>
-  <select name="field">
-    <option >Select (YES?NO):</option>
-    <option >yes</option>
-    <option >no</option>
-
-<p></p>
-  <label for="new"><b>Reason:</b><b>     </b></label>
-    <input type="text" placeholder="Enter Reason" name="reason" required>
-    <p></p>
-<button type="submit">Send Mail</button>
-<p></p>    
+    
+    <br></br>
+<label for="new"><b>Year Of Relieving:</b><b>     </b></label>
+    <input type="integer" placeholder="Enter Year of Relieving" name="days" required>
+  <p></p>
+    <button type="submit">Upload</button>  
 </div>
 </form></p>
     </div>
+    <!-- end top-bar -->
+    {% endblock %}
+    {% block container %}
+    <!-- main-container -->
+    <!--<div class="container main-container">
+        
+    </div>-->
     <!-- end main-container -->
     {%endblock %}

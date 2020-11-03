@@ -89,6 +89,7 @@ def newinfo(request):
             date=request.POST.get('date')
             year=request.POST.get('year')
             deptid=request.POST.get('deptid')
+            datej=request.POST.get('datej')
             
             	#(first_name,second_name,email,password,mobile,address,gender,role,myattend,totalattend,leaveapp,salary,experience)
             query="insert into facultydb values(NULL,'%s','%s','%s','%s','%s','%s','%s','%s','1','1','no','%s','%s')" %(first,last,email,password,mobile,address,gender,role,salary,experience)
@@ -102,6 +103,9 @@ def newinfo(request):
             models.cursor.execute(query2)
             models.db.commit()
             query2=" insert into facultydbdept values(%s,'%s','%s')"%(regid,deptname,deptid)
+            models.cursor.execute(query2)
+            models.db.commit()
+            query2=" insert into facultydbjoin values(%s,'%s',0,'Active')"%(regid,datej)
             models.cursor.execute(query2)
             models.db.commit()
             
