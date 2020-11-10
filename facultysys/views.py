@@ -102,30 +102,12 @@ def forget(request):
         
     
 
-def portfolio(request):	
-	return render(request,'portfolio.html',{'curl':curl})
+
 
 def about(request):	
 	return render(request,'about.html',{'curl':curl})
 
-def engineering(request):
-    return render(request,'project.html',{'curl':curl})
-def management(request):
-    return render(request,'projectmanage.html',{'curl':curl})
-def commerce(request):
-    return render(request,'projectcom.html',{'curl':curl})
-def science(request):
-    return render(request,'projectscience.html',{'curl':curl})
-def social(request):
-    return render(request,'projectsocial.html',{'curl':curl})
-def art(request):
-    return render(request,'projectart.html',{'curl':curl})
-def human(request):
-    return render(request,'projecthuman.html',{'curl':curl})
-def agriculture(request):
-    return render(request,'projectagri.html',{'curl':curl})
-def pharmacy(request):
-    return render(request,'projectpharm.html',{'curl':curl})
+
 
 
 
