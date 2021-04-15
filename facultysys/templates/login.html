@@ -86,13 +86,23 @@
     <input type="text" placeholder="Enter Email" name="email" required>
     <p></p>
     <label for="password"><b>Password</b></label>
-    <span></span><input type="password" placeholder="Enter Password" name="password" required>
+    <span></span><input type="password" placeholder="Enter Password" id="myInput" name="password"><br><br>
+<input type="checkbox" onclick="myFunction()">Show Password
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myInput");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
+  }
+}
+</script>
 <p></p>
     <button type="submit">Login</button>
 <p></p>    
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
+    
   </div>
 <p></p>
   <div class="container" style="background-color:#f1f1f1">

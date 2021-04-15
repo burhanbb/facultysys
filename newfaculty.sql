@@ -1,6 +1,6 @@
 -- MySQL dump 10.10
 --
--- Host: localhost    Database: facultysys
+-- Host: localhost    Database: newfaculty
 -- ------------------------------------------------------
 -- Server version	5.0.24-community-nt
 
@@ -67,7 +67,7 @@ CREATE TABLE `facultydb` (
 
 /*!40000 ALTER TABLE `facultydb` DISABLE KEYS */;
 LOCK TABLES `facultydb` WRITE;
-INSERT INTO `facultydb` VALUES (1,'Burhan','Bootwala','burhanuddinboot.am@gmail.com','1234','7869420882','Hasanji Nagar,Rau','male','admin',20,20,'no',23328,'4 Years'),(2,'Burhanuddin','Bootwala','burhanuddinbootwala6864@gmail.com','123','7974265551','Hasanji Nagar,Rau','male','manager',20,20,'no',1000000,'5 Months'),(3,'Burhanuddin','Bootwala','en18cs301071@medicaps.ac.in','123','8770488131','Hasanji Nagar,Rau','male','user',20,20,'yes',10000,'22 Months'),(6,'deep','Singh','deepkuldeep8777@gmail.com','123','8770488131','Indore','male','user',90,98,'yes',9000,'6 Years'),(7,'harsh','Narang','harshein02@gmail.com','12345','6266570610','kalindi midtown','female','user',15,20,'yes',25080,'5 Months'),(8,'isshita','trivedi','isshita2710@gmail.com','123','6266973037','Satna','female','manager',17,20,'no',30000,'1 Year'),(9,'Jayant','Parmar','parmarjayant987@gmail.com','123','6264515550','Pipalgon','male','user',1,1,'no',33250,'5 Years'),(10,'deepanshu ','kumar','deepanshu1297@gmail.com','0000','6265495916','burhan k ghar k pas','male','admin',90,20,'no',10000000,'no experience'),(11,'burhan','bootwala','matcrafttm@gmail.com','123','8770488131','Indore','male','user',1,1,'no',3000,'5 months'),(12,'Burhan','Bootwala','popingloving7@gmail.com','123','8770488131','Indore','male','user',1,1,'no',3000,'2 Years');
+INSERT INTO `facultydb` VALUES (1,'Burhan','Bootwala','burhanuddinboot.am@gmail.com','1234','7869420882','Hasanji Nagar,Rau','male','admin',20,20,'no',23328,'4 Years'),(2,'Burhanuddin','Bootwala','burhanuddinbootwala6864@gmail.com','b1u2r3h4a5N','7974265551','Hasanji Nagar,Rau','male','manager',20,20,'no',1000000,'5 Months'),(3,'Burhanuddin','Bootwala','en18cs301071@medicaps.ac.in','123','8770488131','Hasanji Nagar,Rau','male','user',20,20,'yes',10000,'22 Months'),(6,'deep','Singh','deepkuldeep8777@gmail.com','123','8770488131','Indore','male','user',90,98,'yes',9000,'6 Years'),(7,'harsh','Narang','harshein02@gmail.com','12345','6266570610','kalindi midtown','female','user',15,20,'yes',25080,'5 Months'),(8,'isshita','trivedi','isshita2710@gmail.com','123','6266973037','Satna','female','manager',17,20,'no',30000,'1 Year'),(9,'Jayant','Parmar','parmarjayant987@gmail.com','123','6264515550','Pipalgon','male','user',1,1,'no',33250,'5 Years'),(10,'deepanshu ','kumar','deepanshu1297@gmail.com','0000','6265495916','burhan k ghar k pas','male','admin',90,20,'no',10000000,'no experience'),(11,'burhan','bootwala','matcrafttm@gmail.com','123','8770488131','Indore','male','user',1,1,'no',3000,'5 months'),(12,'Burhan','Bootwala','popingloving7@gmail.com','123','8770488131','Indore','male','user',1,1,'no',3000,'2 Years');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `facultydb` ENABLE KEYS */;
 
@@ -311,38 +311,6 @@ LOCK TABLES `facultydbworkshopo` WRITE;
 INSERT INTO `facultydbworkshopo` VALUES (3,'attended none');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `facultydbworkshopo` ENABLE KEYS */;
-
---
--- Table structure for table `register`
---
-
-DROP TABLE IF EXISTS `register`;
-CREATE TABLE `register` (
-  `regid` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `password` varchar(10) NOT NULL,
-  `address` varchar(1000) NOT NULL,
-  `mobile` varchar(15) NOT NULL,
-  `city` varchar(20) NOT NULL,
-  `gender` varchar(10) NOT NULL,
-  `role` varchar(10) NOT NULL,
-  `status` int(11) NOT NULL,
-  `dt` varchar(100) NOT NULL,
-  PRIMARY KEY  (`regid`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `register`
---
-
-
-/*!40000 ALTER TABLE `register` DISABLE KEYS */;
-LOCK TABLES `register` WRITE;
-INSERT INTO `register` VALUES (1,'vilekh','vilekh@gmail.com','123','indore mp','11111111111','Indore','male','admin',1,'Mon Jul 22 10:38:15 2019'),(2,'Burhan','burhanuddinboot.am@gmail.com','123','Hasanji Nagar,Rau','8770488131','Indore','male','manager',1,'Thurs'),(3,'Harshein','narang@gmail.com','123','Kalindi,Rau','33232','Indore','female','user',1,'Thurs');
-UNLOCK TABLES;
-/*!40000 ALTER TABLE `register` ENABLE KEYS */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
