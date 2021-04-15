@@ -1,6 +1,6 @@
 import MySQLdb
 
-db=MySQLdb.connect('localhost','root','root','newfaculty')
+db=MySQLdb.connect('localhost','root','root','facultysys')
 
 cursor=db.cursor()
 

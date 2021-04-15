@@ -98,7 +98,7 @@ WSGI_APPLICATION = 'facultysys.wsgi.application'
 DATABASES = {
 'default': {
 'ENGINE': 'django.db.backends.mysql',
-'NAME': 'newfaculty',
+'NAME': 'facultysys',
 'USER': 'root',
 'PASSWORD': 'root',
 'HOST': 'localhost',

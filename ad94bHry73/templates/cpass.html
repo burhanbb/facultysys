@@ -35,26 +35,11 @@
 <br></br>
   <div class="container">
     <label for="email"><b>Existng Password:</b><b>     </b></label>
-    <input type="password" placeholder="Enter Exisiting Password" name="field" required>
-   
-    <br></br>
+    <input type="text" placeholder="Enter Exisiting Password" name="field" required>
+    <p></p>
+</div>
 <label for="new"><b>New Password:</b><b>     </b></label>
-    <input type="password" placeholder="Enter New Password" id="myInput" name="value" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required> <br></br>
-<input type="checkbox" onclick="myFunction()">Show Password
-
-
-
-<script>
-function myFunction() {
-  var x = document.getElementById("myInput");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-</script>
-<p></p>
+    <input type="text" placeholder="Enter New Password" name="value" required>
     <p></p>
 <button type="submit">Change</button>
 <p></p>    
